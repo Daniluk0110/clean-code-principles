@@ -245,8 +245,42 @@ final class InvoiceGenerator
 }
 ```
 
+## 📝 Naming Cheat Sheet
+
+| ❌ Плохое имя | ✅ Хорошее имя | 💡 Правило | 📍 Контекст |
+| --- | --- | --- | --- |
+| handle() | processRefundRequest() | Метод должен говорить ЧТО он делает | Service |
+| process() | importProductsFromCsv() | Избегай глаголов-пустышек | Importer |
+| do() | calculateOrderDiscount() | Нет глаголам без смысла | Calculator |
+| manage() | activateUserSubscription() | Управление чем? Будь конкретен | Manager |
+| run() | sendPasswordResetEmail() | Что запускаем? | Notification |
+| execute() | chargeCustomerCard() | Что выполняем? | Payment |
+| $data | $rawProductsArray | Что за данные? | Parser |
+| $result | $calculatedDiscount | Результат чего? | Calculator |
+| $temp | $pendingOrderIds | Временное что? | Service |
+| $item | $cartLineItem | Элемент чего? | Cart |
+| $value | $unitPriceInCents | Значение чего? | Money |
+| $info | $customerBillingAddress | Какая инфо? | Order |
+| $active | $isActive | Булевы всегда is/has/can/should | User |
+| $check | $hasUnpaidInvoices | Проверка чего? | Billing |
+| $allowed | $canProcessRefund | Разрешение на что? | Order |
+| $flag | $shouldSendWelcomeEmail | Флаг чего? | Registration |
+| DataProcessor | CsvProductImporter | Что обрабатывает и откуда? | Import |
+| Manager | SubscriptionRenewalService | Менеджер чего конкретно? | Billing |
+| Helper | VatCalculator | Helper это мусорное слово | Tax |
+| Utils | DateRangeFormatter | Utils это мусорное слово | Report |
+
+### 🚨 Стоп-слова
+
+Методы: `handle`, `process`, `do`, `run`, `execute`, `manage`, `perform`. Эти слова скрывают смысл и не объясняют, какое действие выполняется.
+
+Классы: `Manager`, `Helper`, `Utils`, `Handler`, `Processor`, `Data`, `Info`. Эти названия размывают роль и превращают классы в «контейнеры всего».
+
+Переменные: `$data`, `$result`, `$temp`, `$item`, `$value`, `$obj`, `$flag`. Эти имена не дают контекста и усложняют чтение кода.
+
 **Оглавление 📚**
 
+- [Naming Cheat Sheet](#-naming-cheat-sheet)
 - [SOLID](SOLID)
 - [DRY](DRY)
 - [KISS](KISS)
