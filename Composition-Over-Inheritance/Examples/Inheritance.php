@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-final class BaseNotification
+class BaseNotification
 {
     public function send(string $message): void
     {
@@ -10,7 +10,7 @@ final class BaseNotification
     }
 }
 
-final class EmailNotification extends BaseNotification
+class EmailNotification extends BaseNotification
 {
     public function send(string $message): void
     {
@@ -18,7 +18,7 @@ final class EmailNotification extends BaseNotification
     }
 }
 
-final class PriorityEmailNotification extends EmailNotification
+class PriorityEmailNotification extends EmailNotification
 {
     public function send(string $message): void
     {
@@ -26,7 +26,7 @@ final class PriorityEmailNotification extends EmailNotification
     }
 }
 
-final class LoggedPriorityEmailNotification extends PriorityEmailNotification
+class LoggedPriorityEmailNotification extends PriorityEmailNotification
 {
     public function send(string $message): void
     {
@@ -39,6 +39,6 @@ final class LoggedPriorityEmailNotification extends PriorityEmailNotification
 $notification = new LoggedPriorityEmailNotification();
 $notification->send('Order #1001 ready.');
 
-// Что если добавить SMS и логирование? Потребуется ещё один класс: //
+// Что если добавить SMS и логирование? Потребуется ещё один класс:
 // LoggedSmsNotification extends SmsNotification extends BaseNotification, etc.
 // С ростом фичей число классов взрывается, а поведение становится трудно понять.
