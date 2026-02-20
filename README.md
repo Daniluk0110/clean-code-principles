@@ -1,8 +1,41 @@
 # Чистый код на PHP 8.4+ 🚀
 
+[![PHP 8.4+](https://img.shields.io/badge/PHP-8.4%2B-blue?logo=php&logoColor=white)](https://www.php.net/releases/8.4/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Daniluk0110/clean-code-principles/pulls)
 [![CI](https://github.com/Daniluk0110/clean-code-principles/actions/workflows/ci.yml/badge.svg)](https://github.com/Daniluk0110/clean-code-principles/actions/workflows/ci.yml)
 
 Этот репозиторий — практический гид по принципам чистого кода для реальных бизнес‑задач на PHP. Здесь нет абстрактных животных и фигур — только e‑commerce, платежи, нотификации, интеграции и отчеты. Цель — показать, как писать поддерживаемый, надежный и расширяемый код, который не ломается при росте продукта. ✨
+
+**🗺️ Дорожная карта изучения**
+- **Junior → Middle (рекомендуемый порядок):** KISS → Early-Exit → DRY → YAGNI → Naming → Fail-Fast → SOLID (S → O → L → I → D) → Law-Of-Demeter → Value-Objects → Code-Smells → Refactoring-Kata
+- **Middle → Senior (для тех, кто уже знает SOLID):** Value-Objects → Immutability → Fail-Fast → CQS → Composition-Over-Inheritance → Code-Smells → Refactoring-Kata
+
+## Оглавление
+- 🧱 **SOLID**
+  - S — Single Responsibility
+  - O — Open-Closed
+  - L — Liskov Substitution
+  - I — Interface Segregation
+  - D — Dependency Inversion
+  - Все принципы вместе
+- 🔁 **Базовые принципы**
+  - DRY
+  - KISS
+  - YAGNI
+- 🛠️ **Практики чистого кода**
+  - Early Exit / Guard Clauses
+  - Law of Demeter
+  - Fail-Fast
+  - Immutability
+  - Value Objects
+  - Command Query Separation
+  - Composition Over Inheritance
+- 🗺️ **Справочники**
+  - [Naming Cheat Sheet](#-naming-cheat-sheet)
+  - [Code Smells каталог](Code-Smells/README.md)
+- 🏆 **Финальный босс**
+  - Refactoring Kata
 
 **Базовые принципы**
 
@@ -282,11 +315,3 @@ final class InvoiceGenerator
 Классы: `Manager`, `Helper`, `Utils`, `Handler`, `Processor`, `Data`, `Info`. Эти названия размывают роль и превращают классы в «контейнеры всего».
 
 Переменные: `$data`, `$result`, `$temp`, `$item`, `$value`, `$obj`, `$flag`. Эти имена не дают контекста и усложняют чтение кода.
-
-**Оглавление 📚**
-
-- [Naming Cheat Sheet](#-naming-cheat-sheet)
-- [SOLID](SOLID)
-- [DRY](DRY)
-- [KISS](KISS)
-- [YAGNI](YAGNI)
