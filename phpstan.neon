@@ -1,0 +1,15 @@
+parameters:
+    level: 9
+    checkMissingIterableValueType: true
+    paths:
+        - CQS/Examples
+        - Code-Smells/Examples
+        - Composition-Over-Inheritance/Examples
+        - DRY/Examples
+        - Early-Exit/Examples
+        - Fail-Fast/Examples
+        - Immutability/Examples
+        - KISS/Examples
+        - Law-Of-Demeter/Examples
+        - Value-Objects/Examples
+        - YAGNI/Examples
