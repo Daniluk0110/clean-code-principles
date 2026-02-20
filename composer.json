@@ -1,0 +1,22 @@
+{
+    "name": "Daniluk0110/clean-code-principles",
+    "autoload": {
+        "psr-4": {
+            "CleanCodePrinciples\\CQS\\Examples\\": "CQS/Examples/",
+            "CleanCodePrinciples\\CodeSmells\\Examples\\": "Code-Smells/Examples/",
+            "CleanCodePrinciples\\CompositionOverInheritance\\Examples\\": "Composition-Over-Inheritance/Examples/",
+            "CleanCodePrinciples\\DRY\\Examples\\": "DRY/Examples/",
+            "CleanCodePrinciples\\EarlyExit\\Examples\\": "Early-Exit/Examples/",
+            "CleanCodePrinciples\\FailFast\\Examples\\": "Fail-Fast/Examples/",
+            "CleanCodePrinciples\\Immutability\\Examples\\": "Immutability/Examples/",
+            "CleanCodePrinciples\\KISS\\Examples\\": "KISS/Examples/",
+            "CleanCodePrinciples\\LawOfDemeter\\Examples\\": "Law-Of-Demeter/Examples/",
+            "CleanCodePrinciples\\ValueObjects\\Examples\\": "Value-Objects/Examples/",
+            "CleanCodePrinciples\\YAGNI\\Examples\\": "YAGNI/Examples/"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.0"
+    }
+}
