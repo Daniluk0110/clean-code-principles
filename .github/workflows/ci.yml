@@ -13,15 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup PHP
-        uses: shivammathur/setup-php@v3
+        uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
           tools: composer
+
       - name: Validate PHP syntax
         run: |
-          find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -print0 | xargs -0 -n1 php -l
+          find . -name '*.php' \
+            -not -path './vendor/*' \
+            -not -path './.github/*' \
+            -print0 | xargs -0 -n1 php -l
+
       - name: Install dependencies
-        run: composer install --no-interaction --no-progress --no-suggest
+        run: composer install --no-interaction --no-progress
+
       - name: Static analysis
         run: vendor/bin/phpstan analyse
