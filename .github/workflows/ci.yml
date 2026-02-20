@@ -25,6 +25,7 @@ jobs:
           find . -name '*.php' \
             -not -path './vendor/*' \
             -not -path './.github/*' \
+            -not -path '*/bad/*' \
             -print0 | xargs -0 -n1 php -l
 
       - name: Install dependencies
