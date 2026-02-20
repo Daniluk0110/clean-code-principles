@@ -70,7 +70,7 @@ final class NotificationService
         $stack = array_reduce(
             array_reverse($this->middlewares),
             fn(callable $carry, NotificationMiddlewareInterface $middleware) => fn(string $msg) => $middleware->process($msg, $carry),
-            fn(string $msg): void => $this->transport->send($msg)
+            fn(string $msg) => $this->transport->send($msg)
         );
 
         $stack($message);
