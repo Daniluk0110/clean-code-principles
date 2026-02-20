@@ -1,6 +1,5 @@
 parameters:
     level: 9
-    checkMissingIterableValueType: true
     paths:
         - CQS/Examples
         - Code-Smells/Examples
