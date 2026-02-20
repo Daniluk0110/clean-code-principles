@@ -1,5 +1,5 @@
 {
-    "name": "Daniluk0110/clean-code-principles",
+    "name": "daniluk0110/clean-code-principles",
     "autoload": {
         "psr-4": {
             "CleanCodePrinciples\\CQS\\Examples\\": "CQS/Examples/",
