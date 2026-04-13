@@ -12,6 +12,10 @@
 - Отсекаем недопустимые состояния.
 - Хотим сократить количество уровней вложенности.
 
+### 💸 Бизнес-риски
+- **Баги в логике из-за сложного чтения:** Когда код представляет собой "елочку" (Arrow Code) с 5 уровнями вложенности, разработчик легко может ошибиться блоком `else` и оформить возврат там, где его быть не должно.
+- **Увеличение времени онбординга:** Чтение запутанного кода занимает у новых разработчиков больше времени. Они тратят часы, чтобы просто понять, при каких условиях дойдет дело до реального "полезного" действия.
+
 ## Запахи кода 👃
 - Глубокая вложенность `if` (код-стрела).
 - Смешение проверок и "счастливого пути" в одном блоке.
@@ -134,9 +138,36 @@ final class RefundService
 }
 ```
 
+### 🧪 Как это тестировать?
+С линейным кодом очень легко писать тесты под каждый сценарий отказа (Guard Clause), так как каждый негативный сценарий изолирован и не зависит от других `if/else`.
+
+```php
+public function testRefundFailsForInactiveUser(): void
+{
+    $service = new RefundService();
+    $user = new User(active: false);
+    $order = new Order(paid: true, refunded: false);
+
+    $result = $service->processRefund($user, $order);
+
+    $this->assertEquals('User is not active', $result);
+}
+
+public function testRefundProcessedSuccessfully(): void
+{
+    $service = new RefundService();
+    $user = new User(active: true);
+    $order = new Order(paid: true, refunded: false);
+
+    $result = $service->processRefund($user, $order);
+
+    $this->assertEquals('Refund processed', $result);
+}
+```
+
 ## Примеры запуска ▶️
 
 ```bash
-php Early-Exit/Examples/bad.php
-php Early-Exit/Examples/good.php
+php Early-Exit/Examples/RefundService/bad.php
+php Early-Exit/Examples/RefundService/good.php
 ```
