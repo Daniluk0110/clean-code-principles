@@ -12,6 +12,10 @@
 - Изменения в одной части модели меньше ломают другую.
 - Код проще рефакторить и тестировать.
 
+### 💸 Бизнес-риски
+- **Хрупкая архитектура (Fragile System):** При нарушении закона Деметры система напоминает карточный домик. Бизнес просит добавить новую страну для доставки, вы меняете структуру профиля пользователя, и внезапно падает формирование отчетов и отправка писем в совершенно других модулях.
+- **Сложность внедрения изменений:** Разработчики тратят часы на обновление всех цепочек вызовов (Train Wrecks) по всему проекту вместо реализации реальной бизнес-фичи.
+
 ## Запахи кода 👃
 - Цепочки вызовов (Train Wrecks): `$a->b()->c()->d()`.
 - Хрупкие зависимости между слоями модели.
@@ -159,9 +163,25 @@ $zip = $order->getBillingZipCode();
 echo "ZIP: {$zip}\n";
 ```
 
+### 🧪 Как это тестировать?
+Тестировать Train Wrecks (`$a->b()->c()->d()`) — настоящее проклятие, потому что приходится создавать огромные каскадные моки (`Mock A returns Mock B`, `Mock B returns Mock C`, и т.д.).
+Соблюдение Закона Деметры делает тесты тривиальными:
+
+```php
+public function testOrderReturnsCustomerBillingZipCode(): void
+{
+    $customerMock = $this->createMock(Customer::class);
+    $customerMock->method('getBillingZipCode')->willReturn('10115');
+
+    $order = new Order($customerMock);
+    
+    $this->assertEquals('10115', $order->getBillingZipCode());
+}
+```
+
 ## Примеры запуска ▶️
 
 ```bash
-php Law-Of-Demeter/Examples/bad.php
-php Law-Of-Demeter/Examples/good.php
+php Law-Of-Demeter/Examples/DeliveryAddress/bad.php
+php Law-Of-Demeter/Examples/DeliveryAddress/good.php
 ```
