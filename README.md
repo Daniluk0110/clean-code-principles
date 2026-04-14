@@ -34,6 +34,7 @@
 - 🗺️ **Справочники**
   - [Naming Cheat Sheet](#-naming-cheat-sheet)
   - [Code Smells каталог](Code-Smells/README.md)
+  - [Value Objects каталог](Value-Objects/README.md)
 - 🏆 **Финальный босс**
   - Refactoring Kata
 
