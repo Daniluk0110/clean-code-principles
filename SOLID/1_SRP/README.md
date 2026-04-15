@@ -5,7 +5,11 @@
 
 **Суть:** у класса должна быть одна причина для изменения — одна четкая зона ответственности. ✅
 
-**Почему важно:** маленькие, сфокусированные классы проще тестировать, расширять и менять без побочных эффектов. 💡
+## Почему важно: маленькие, сфокусированные классы проще тестировать, расширять и менять без побочных эффектов. 💡
+
+### 💸 Бизнес-риски
+- **Частые баги (Regression):** Если один класс отвечает и за расчет цен, и за отправку email, изменение шаблона письма может случайно сломать расчет налогов. Бизнес теряет деньги.
+- **Merge Conflicts:** Когда вся команда работает над одним `OrderProcessor`, постоянно возникают конфликты слияния веток. Разработчики тратят часы на разрешение конфликтов, а не на фичи.
 
 ## Теория простыми словами 📌
 - Ответственность — это изменяемость по одной причине, а не один метод.
@@ -107,13 +111,29 @@ final class OrderProcessor
 ```
 
 ## Пример мини‑системы (Examples/) 🧪
-В папке `Examples/` лежат 4 файла с полностью рабочим примером без фреймворков:
-- `OrderTotalCalculator.php`
-- `OrderLogger.php`
-- `ReceiptEmailSender.php`
-- `index.php`
+В папке `Examples/OrderProcessing/` лежат две версии кода:
+- `Dirty/OrderProcessor.php` (Монолит с несколькими ответственностями)
+- `Clean/OrderTotalCalculator.php`, `OrderLogger.php`, `ReceiptEmailSender.php`, `index.php` (Код, разбитый по SRP)
+
+### 🧪 Как это тестировать?
+Тестировать грязный класс `OrderProcessor` сложно: при тестировании логики расчета вам придется создавать моки для логгера и почтового клиента, хотя они вообще не должны участвовать в расчете.
+
+А вот чистый код тестируется легко:
+```php
+public function testTotalIsCalculatedCorrectly(): void
+{
+    $calculator = new OrderTotalCalculator();
+    $total = $calculator->calculate([
+        ['price' => 10, 'qty' => 2],
+        ['price' => 5, 'qty' => 1]
+    ]);
+
+    $this->assertEquals(25.0, $total);
+}
+```
 
 Запуск:
 ```bash
-php index.php
+php SOLID/1_SRP/Examples/OrderProcessing/Dirty/OrderProcessor.php
+php SOLID/1_SRP/Examples/OrderProcessing/Clean/index.php
 ```
