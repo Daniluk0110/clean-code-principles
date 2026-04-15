@@ -9,6 +9,10 @@
 
 **Почему важно:** мы можем менять детали (например, MySQL на PostgreSQL) без переписывания бизнес‑логики. 💡
 
+### 💸 Бизнес-риски
+- **Невозможность юнит-тестирования:** Если `UserService` сам делает `new MySQLDatabase()`, вы не сможете протестировать сервис без поднятия реальной базы данных. Тесты будут медленными (минуты вместо миллисекунд), хрупкими (упали из-за сети) и дорогими в поддержке.
+- **Вендор-лок (Vendor Lock-in):** Ваш код навсегда привязан к одному инструменту. Если завтра бизнес решит переехать на облачную базу данных, вам придется переписывать сотни классов бизнес-логики, которые напрямую зависели от MySQL.
+
 ## Теория простыми словами 📌
 - Бизнес-логика не должна знать, где и как хранятся данные.
 - Конкретные реализации подставляются снаружи.
@@ -85,14 +89,28 @@ final class UserService
 ```
 
 ## Пример мини‑системы (Examples/) 🧪
-В папке `Examples/` лежат 5 файлов с полностью рабочим примером без фреймворков:
-- `DatabaseInterface.php`
-- `MySQLDatabase.php`
-- `UserService.php`
-- `Container.php`
-- `index.php`
+В папке `Examples/DatabaseConnection/` лежат две версии кода:
+- `Dirty/UserService.php` (Жесткая зависимость от MySQLDatabase)
+- `Clean/` (Абстракция DatabaseInterface, внедрение зависимостей)
+
+### 🧪 Как это тестировать?
+С грязным кодом тесты невозможны без поднятия Docker с MySQL. 
+С чистым кодом (DIP) вы передаете тестовую "заглушку" в класс и тестируете бизнес-логику за миллисекунды:
+
+```php
+public function testServiceReturnsUser(): void
+{
+    // FakeDatabase реализует DatabaseInterface, но работает с массивом в ОЗУ
+    $fakeDb = new FakeDatabase(['id' => 1, 'name' => 'Test User']);
+    
+    $service = new UserService($fakeDb);
+    
+    $this->assertEquals('Test User', $service->getUser(1)['name']);
+}
+```
 
 Запуск:
 ```bash
-php index.php
+php SOLID/5_DIP/Examples/DatabaseConnection/Dirty/UserService.php
+php SOLID/5_DIP/Examples/DatabaseConnection/Clean/index.php
 ```
