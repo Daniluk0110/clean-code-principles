@@ -7,6 +7,10 @@
 
 **Почему важно:** если подтип меняет поведение, всё «снаружи» начинает вести себя непредсказуемо. Это источник скрытых багов и сложной поддержки. 💡
 
+### 💸 Бизнес-риски
+- **Скрытые падения в рантайме:** Если класс `ReadOnlyStorage` наследуется от `FileStorage`, но выбрасывает исключение при попытке записи, система упадет ровно в тот момент, когда фоновый воркер попытается сохранить резервную копию.
+- **Множество костылей (Type checking):** Разработчикам придется писать проверки типа `if (!$storage instanceof ReadOnlyStorage)` по всему проекту, нарушая OCP и создавая запутанный код-спагетти.
+
 ## Теория простыми словами 📌
 - Подтип должен соблюдать контракт базового типа.
 - Нельзя усиливать предусловия и ослаблять постусловия.
@@ -96,14 +100,26 @@ final class ReadOnlyStorage implements ReadableStorage
 ```
 
 ## Пример мини‑системы (Examples/) 🧪
-В папке `Examples/` лежат 5 файлов с полностью рабочим примером без фреймворков:
-- `ReadableStorage.php`
-- `WritableStorage.php`
-- `InMemoryStorage.php`
-- `ReadOnlyStorage.php`
-- `index.php`
+В папке `Examples/Storage/` лежат две версии кода:
+- `Dirty/FileStorage.php` (Нарушение LSP, класс падает при вызове метода родителя)
+- `Clean/` (Разделение интерфейсов на чтение и запись)
+
+### 🧪 Как это тестировать?
+Соблюдение LSP гарантирует, что ваши моки в тестах будут правдивыми. Если вы создаете мок для базового класса, он должен вести себя так же, как любой его подкласс.
+В правильном подходе (Clean) мы можем написать контрактный тест (Interface Test), который будут проходить все реализации `WritableStorage`.
+
+```php
+public function testStorageWritesData(): void
+{
+    $storage = new InMemoryStorage();
+    $storage->write('/test.txt', 'hello');
+
+    $this->assertEquals('hello', $storage->read('/test.txt'));
+}
+```
 
 Запуск:
 ```bash
-php index.php
+php SOLID/3_LSP/Examples/Storage/Dirty/FileStorage.php
+php SOLID/3_LSP/Examples/Storage/Clean/index.php
 ```
