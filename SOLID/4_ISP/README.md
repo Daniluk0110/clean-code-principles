@@ -7,6 +7,10 @@
 
 **Почему важно:** маленькие интерфейсы уменьшают связанность, упрощают реализацию и делают систему гибкой. 💡
 
+### 💸 Бизнес-риски
+- **Сложность разработки:** Когда в компанию приходит новый вендор (например, отправка SMS), разработчику приходится реализовывать гигантский интерфейс `NotificationServiceProvider`, в котором 90% методов — это заглушки.
+- **Внезапные поломки из-за интерфейсов-монстров:** При добавлении метода `manageKubernetesCluster` в общий интерфейс `CloudProviderInterface`, ломаются абсолютно все классы-провайдеры, даже те, которые отвечают только за простую отправку файлов на FTP. 
+
 ## Теория простыми словами 📌
 - Интерфейс описывает контракт конкретного клиента.
 - Лишние методы — это лишняя зависимость.
@@ -86,14 +90,30 @@ final class DeployOnlyProvider implements AppDeployer
 ```
 
 ## Пример мини‑системы (Examples/) 🧪
-В папке `Examples/` лежат 5 файлов с полностью рабочим примером без фреймворков:
-- `AppDeployer.php`
-- `DatabaseManager.php`
-- `CdnManager.php`
-- `DeployOnlyProvider.php`
-- `index.php`
+В папке `Examples/CloudServices/` лежат две версии кода:
+- `Dirty/CloudProvider.php` (Толстый интерфейс с NotSupportedExceptions)
+- `Clean/` (Маленькие узконаправленные интерфейсы)
+
+### 🧪 Как это тестировать?
+Мокировать огромный интерфейс в PHPUnit — это долго и муторно (приходится заглушать десятки методов, которые даже не нужны для теста).
+С разделенными интерфейсами вы мокаете только то, что реально нужно вашему сервису.
+
+```php
+public function testDeploymentServiceCallsDeployer(): void
+{
+    // Мокаем только AppDeployer! Нам не нужно мокать БД или CDN.
+    $deployerMock = $this->createMock(AppDeployer::class);
+    $deployerMock->expects($this->once())
+                 ->method('deployApp')
+                 ->with('my_app', 'v1.0');
+
+    $service = new DeploymentService($deployerMock);
+    $service->runDeployment('my_app', 'v1.0');
+}
+```
 
 Запуск:
 ```bash
-php index.php
+php SOLID/4_ISP/Examples/CloudServices/Dirty/CloudProvider.php
+php SOLID/4_ISP/Examples/CloudServices/Clean/index.php
 ```
