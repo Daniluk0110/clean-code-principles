@@ -14,6 +14,9 @@
 - [**Feature Envy**](Examples/FeatureEnvy.php) — метод, который больше интересуется данными другого класса, чем своего собственного.
 - [**Inappropriate Intimacy**](Examples/InappropriateIntimacy.php) — излишне тесная связь между классами, когда один лезет во внутренности другого.
 - [**Message Chains**](Examples/MessageChains.php) — длинные цепочки вызовов (A->B()->C()->D()), нарушающие закон Деметры.
+- [**Shotgun Surgery**](Examples/Shotgun-Surgery/) — запах, при котором одно изменение вынуждает делать множество мелких правок в разных классах.
+- [**Switch Statements**](Examples/Switch-Statements/) — злоупотребление гигантскими условными операторами вместо использования полиморфизма.
+- [**Type Hinting Abuse (Одержимость массивами)**](Examples/Type-Hinting-Abuse/) — передача данных через ассоциативные массивы вместо строгих DTO.
 
 ## Как бороться?
 Используйте рефакторинг:
