@@ -25,3 +25,4 @@
 
 - [**No Else**](Examples/No-Else/) — как избавиться от лишних ветвлений с помощью Early Exit.
 - [**First Class Collections**](Examples/First-Class-Collections/) — вынесение логики работы с массивами в отдельные классы.
+- [**One Level Of Indentation**](Examples/One-Level-Of-Indentation/) — избавление от глубокой вложенности условий и циклов.

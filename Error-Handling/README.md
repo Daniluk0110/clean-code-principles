@@ -22,3 +22,4 @@
 
 - [**Exceptions**](Examples/Exceptions/) — почему исключения лучше возврата `null`.
 - [**Result Object**](Examples/Result-Object/) — как обрабатывать ошибки без прерывания выполнения программы.
+- [**Domain Exceptions**](Examples/Domain-Exceptions/) — как кастомные исключения спасают от хрупкой обработки ошибок.
