@@ -123,9 +123,8 @@ public function testOrderIsShippedSuccessfully(): void
 }
 ```
 
-## Примеры запуска ▶️
+## Список примеров 🗂️
 
-```bash
-php Tell-Dont-Ask/Examples/OrderShipping/bad.php
-php Tell-Dont-Ask/Examples/OrderShipping/good.php
-```
+- [**Order Shipping**](Examples/OrderShipping/) — пример управления статусом заказа (описан выше).
+- [**User Subscription**](Examples/User-Subscription/) — пример отмены подписки пользователя.
+
